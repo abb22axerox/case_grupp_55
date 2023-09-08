@@ -10,6 +10,15 @@ def Calculate():
 ----------------------------------------''')
 
     selection = input("Selection > ")
+    valid_selections = ["add", "sub", "mul", "div"]
+    while selection not in valid_selections:
+        selection = input("Selection > ")
+        if selection in valid_selections:
+            print("Selection accepted!")
+            break
+        else:
+            print(f'''ERROR: Unknown command '{selection}' ''')
+            
     if selection == "add":
         operator = "+"
     elif selection == "sub":
@@ -29,10 +38,23 @@ Calculating 'c' for expression:
 Please, enter values for 'a' and 'b'.
 ''')
 
-    a = (input("a = "))
-    b = (input("b = "))
-    operation = a + " " + operator + " " + b
-    c = eval(operation)
+    while fail:
+        a = (input("a = "))
+        b = (input("b = "))
+        try:
+            operation = a + " " + operator + " " + b
+            c = eval(operation)
+            fail = False
+        except NameError:
+            print('''Error: Invalid value
+            Retry
+            ''')
+            fail = True
+        except ZeroDivisionError:
+            print('''Error: Attempted division by 0
+            Retry
+            ''')
+            fail = True
 
     print(f'''
 RESULT: {operation} = {c}
