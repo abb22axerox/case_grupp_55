@@ -1,12 +1,13 @@
 def Calculate():
-    print("********************************")
-    print("       MATHLETE CALCULATOR      ")
-    print("--------------------------------")
-    print(" add | Add two numbers")
-    print(" sub | Subract two numbers")
-    print(" mul | Multiply two numbers")
-    print(" div | Divide two numbers")
-    print("--------------------------------")
+    print("""
+****************************************
+          Mathlete Calculator
+----------------------------------------
+ add | Add two numbers
+ sub | Subtract two numbers
+ mul | Multiply two numbers
+ div | Divide two numbers
+----------------------------------------""")
 
     selection = ""
     valid_selections = ["add", "sub", "mul", "div"]
@@ -27,14 +28,14 @@ def Calculate():
         operator = "*"
     elif selection == "div":
         operator = "/"
+    
+    print(f'''----------------------------------------
+Calculating 'c' for expression:
 
-    print("--------------------------------")
-    print(" Calculating 'c' for expression:")
-    print("")
-    print("a " + operator + " b = c")
-    print("")
-    print("Enter values for 'a' and 'b'")
-    print("")
+    a {operator} b = c
+
+Please, enter values for 'a' and 'b'.
+''')
 
     while True:
         a = (input("a = "))
@@ -52,11 +53,10 @@ def Calculate():
             print("Retry")
             print("")
 
-    print("--------------------------------")
-    print("")
-    print("Result:", operation, "=", c)
-    print("")
+    print(f'''
+RESULT: {operation} = {c}
+''')
 
-    input("Press enter to perform another calculation ")
+    input("Press enter to perform another operation")
     Calculate()
 Calculate()
