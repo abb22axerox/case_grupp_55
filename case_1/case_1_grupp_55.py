@@ -49,7 +49,7 @@ Please enter values for 'a' and 'b'.
             operation = a + " " + operator + " " + b
             c = eval(operation)
             break
-        except NameError:
+        except (NameError, SyntaxError):
             print("""
 Error: Invalid value
 Retry
