@@ -34,7 +34,7 @@ Calculating 'c' for expression:
 
     a {operator} b = c
 
-Please, enter values for 'a' and 'b'.
+Please enter values for 'a' and 'b'.
 ''')
 
     while True:
@@ -45,18 +45,20 @@ Please, enter values for 'a' and 'b'.
             c = eval(operation)
             break
         except NameError:
-            print("Error: Invalid value")
-            print("Retry")
-            print("")
+            print("""
+Error: Invalid value
+Retry
+""")
         except ZeroDivisionError:
-            print("Error: Attempted division by 0")
-            print("Retry")
-            print("")
+            print("""
+Error: Attempted division by 0
+Retry
+""")
 
     print(f'''
 RESULT: {operation} = {c}
 ''')
 
-    input("Press enter to perform another operation")
+    input("Press enter to perform another operation ")
     Calculate()
 Calculate()
