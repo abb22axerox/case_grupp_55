@@ -15,10 +15,9 @@ def Calculate():
         selection = input("Selection > ")
         if selection in valid_selections:
             print("Selection accepted!")
-            print("")
             break
         else:
-            print("Error: Invalid selection (" + selection + ")")
+            print(f'''ERROR: Unknown command '{selection}' ''')
 
     if selection == "add":
         operator = "+"
@@ -59,6 +58,6 @@ Retry
 RESULT: {operation} = {c}
 ''')
 
-    input("Press enter to perform another operation ")
+    input("Press enter to perform another operation...")
     Calculate()
 Calculate()
