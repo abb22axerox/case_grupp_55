@@ -51,10 +51,15 @@ def list_todos():
         print("-"*20)
         print("Select an index to delete a todo")
         while True:
+            if i == 0:
+                print("-"*20)
+                print("No todos to delete")
+                input("Press enter to continue ")
+                break
             try:
-                delete_todo = int(input("Delete todo > "))
-                todos.pop(delete_todo)
-                print("Deleted todo :", todos[delete_todo])
+                index = int(input("Delete todo > "))
+                deleted_todo = todos.pop(index)
+                print("Deleted todo :", deleted_todo)
                 input("Press enter to continue ")
                 break
             except ValueError:
@@ -62,21 +67,26 @@ def list_todos():
                 input("Press enter to try again ")
                 print("-"*20)
             except IndexError:
-                print("Error: index out of range")
-                input("Press enter to try again ")
-                print("-"*20)
+                if index == 0:
+                    todos = []
+                    print("Deleted todo :", deleted_todo)
+                    input("Press enter to continue ")
+                    break
+                else:
+                    print("Error: index out of range")
+                    input("Press enter to try again ")
+                    print("-"*20)
         list_todos()
 
     elif operation == "load":
-        f = open("Case/case_2/todolist.json")
+        f = open("Case/Case (GitHub)/case_grupp_55/case_2/todolist.json")
         todos = f.read()
-        if type(todos) != "<class 'list'>":
-            todos = json.loads(todos)
+        todos = json.loads(todos)
         f.close()
         list_todos()
 
     elif operation == "save":
-        f = open("Case/case_2/todolist.json", "w")
+        f = open("Case/Case (GitHub)/case_grupp_55/case_2/todolist.json", "w")
         print(todos)
         f.write(json.dumps(todos))
         f.close()
