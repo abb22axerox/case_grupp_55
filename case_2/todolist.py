@@ -8,6 +8,8 @@ def list_todos():
         os.system('cls')
     elif os.name == 'posix':
         os.system('clear')
+    
+    global todos
 
     print("*"*20)
     print("Todoify".center(20))
@@ -26,26 +28,78 @@ def list_todos():
         print("*"*20)
         print("Todos".center(20))
         print("-"*20)
-        global todos
         for todo in todos:
-            print("[] " + todo)
+            if todo[0] == "checked":
+                check = "[X]"
+            else:
+                check = "[]"
+            print(check, todo[1])
         print("-"*20)
         input("Press enter to return to menu ")
 
     elif operation == "add":
         print("-"*20)
-        new_todo = input("New todo > ")
+        new_todo_element = input("New todo > ")
+        new_todo = ["unchecked", new_todo_element]
         todos.append(new_todo)
         print("-"*20)
-        print("Todo added: " + new_todo)
+        print("Todo added: " + new_todo_element)
         print("-"*20)
         input("Press enter to return to menu ")
+
+    elif operation == "check":
+        print("*"*20)
+        print("Todos".center(20))
+        print("-"*20)
+        i = 0
+        for todo in todos:
+            if todo[0] == "checked":
+                check = "[X]"
+            else:
+                check = "[]"
+            print("[" + str(i) + "]", check,  todo[1])
+            i += 1
+
+        if i == 0:
+            print("No todos to check/uncheck")
+            print("-"*20)
+            input("Press enter to return to menu ")
+        
+        else: 
+            print("-"*20)
+            print("Select an index to check/uncheck a todo")
+            print("-"*20)
+            
+            try:
+                index = int(input("Check / Uncheck todo > "))
+                if todos[index][0] == "unchecked":
+                    todos[index][0] = "checked"
+                    print("-"*20)
+                    print("Checked todo :", todos[index][1])
+                else: 
+                    todos[index][0] = "unchecked"
+                    print("-"*20)
+                    print("Unchecked todo :", todos[index][1])
+                print("-"*20)
+                input("Press enter to return to menu ")
+
+            except ValueError:
+                print("-"*20)
+                print("Error: invalid index")
+                print("-"*20)
+                input("Press enter to return to menu ")
+
+            except IndexError:
+                print("-"*20)
+                print("Error: index out of range")
+                print("-"*20)
+                input("Press enter to return to menu ")
 
     elif operation == "delete":
         print("-"*20)
         i = 0
         for todo in todos:
-            print("[" + str(i) + "] " + todo)
+            print("[" + str(i) + "]", todo[1])
             i += 1
 
         if i == 0:
@@ -61,7 +115,7 @@ def list_todos():
                 index = int(input("Delete todo > "))
                 deleted_todo = todos.pop(index)
                 print("-"*20)
-                print("Deleted todo :", deleted_todo)
+                print("Deleted todo :", deleted_todo[1])
                 print("-"*20)
                 input("Press enter to return to menu ")
 
@@ -83,17 +137,16 @@ def list_todos():
         todos = json.loads(todos)
         f.close()
         print("-"*20)
-        input("Todolist loaded")
+        print("Todolist loaded")
         print("-"*20)
         input("Press enter to return to menu ")
 
     elif operation == "save":
         f = open("Case/Case (GitHub)/case_grupp_55/case_2/todolist.json", "w")
-        print(todos)
         f.write(json.dumps(todos))
         f.close()
         print("-"*20)
-        input("Todolist saved")
+        print("Todolist saved")
         print("-"*20)
         input("Press enter to return to menu ")
 
