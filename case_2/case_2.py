@@ -58,31 +58,36 @@ SUCCESS: Todo added "{new_todo_element}"
         for todo in todos:
             print(f'{str(i)} | [{todo[0]}] {todo[1]}')
             i += 1
-        print(40 * '-')
         
-        try:
-            user_todo_id = int(input('Todo index > '))
+        if i == 0:
+            print(f'''                            
+No todos to check / uncheck!
+''')
+        else:
             print(40 * '-')
-            
-            if todos[user_todo_id][0] == ' ':
-                todos[user_todo_id][0] = 'X'
-                print('''
-SUCCESS: UNCHECKED -> CHECKED
-''')
-            else:
-                todos[user_todo_id][0] = ' '
-                print('''
-SUCCESS: CHECKED -> UNCHECKED
-''')
-        except ValueError:
-            print(f'''----------------------------------------
-              
-ERROR: Invalid index (must be a number)
-''')
-        except IndexError:
-            print(f'''
-ERROR: Invalid index (index out of range)
-''')
+            try:
+                user_todo_id = int(input('Todo index > '))
+                print(40 * '-')
+                
+                if todos[user_todo_id][0] == ' ':
+                    todos[user_todo_id][0] = 'X'
+                    print('''
+    SUCCESS: UNCHECKED -> CHECKED
+    ''')
+                else:
+                    todos[user_todo_id][0] = ' '
+                    print('''
+    SUCCESS: CHECKED -> UNCHECKED
+    ''')
+            except ValueError:
+                print(f'''----------------------------------------
+                
+    ERROR: Invalid index (must be a number)
+    ''')
+            except IndexError:
+                print(f'''
+    ERROR: Invalid index (index out of range)
+    ''')
 
     elif selection == "delete":
         print(40 * '-')
@@ -92,26 +97,30 @@ ERROR: Invalid index (index out of range)
             print(f'{str(i)} | [{todo[0]}] {todo[1]}')
             i += 1
 
-        print(40 * '-')
-
-        try:
-            user_todo_id = int(input('Todo index > '))
-            deleted_todo = todos.pop(user_todo_id)
-            print(f'''----------------------------------------
-              
-SUCCESS: Todo deleted "{deleted_todo[1]}"
+        if i == 0:
+            print(f'''       
+No todos to delete!
 ''')
-        except ValueError:
-            print(f'''----------------------------------------
-              
-ERROR: Invalid index (must be a number)
-''')
-        except IndexError:
-            print(f'''----------------------------------------
+        else:
+            print(40 * '-')
+            try:
+                user_todo_id = int(input('Todo index > '))
+                deleted_todo = todos.pop(user_todo_id)
+                print(f'''----------------------------------------
+                
+    SUCCESS: Todo deleted "{deleted_todo[1]}"
+    ''')
+            except ValueError:
+                print(f'''----------------------------------------
+                
+    ERROR: Invalid index (must be a number)
+    ''')
+            except IndexError:
+                print(f'''----------------------------------------
+                
+    ERROR: Invalid index (index out of range)
+    ''')
             
-ERROR: Invalid index (index out of range)
-''')
-        
     elif selection == "save":
         f = open(database_path, "w")
         f.write(json.dumps(todos))
