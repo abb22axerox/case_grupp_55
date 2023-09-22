@@ -30,78 +30,65 @@ def list_todos():
         for todo in todos:
             print("[] " + todo)
         print("-"*20)
-        input("Press enter to return to menu ")
-
+        input("Press enter to continue ")
+        list_todos()
     elif operation == "add":
         print("-"*20)
         new_todo = input("New todo > ")
+        print("-"*20)
         todos.append(new_todo)
-        print("-"*20)
-        print("Todo added: " + new_todo)
-        print("-"*20)
-        input("Press enter to return to menu ")
-
+        print("")
+        print("Success: todo added")
+        print("")
+        input("Press enter to continue ")
+        list_todos()
     elif operation == "delete":
         print("-"*20)
         i = 0
         for todo in todos:
             print("[" + str(i) + "] " + todo)
             i += 1
-
-        if i == 0:
-            print("No todos to delete")
-            print("-"*20)
-            input("Press enter to return to menu ")
-
-        else: 
-            print("-"*20)
-            print("Select an index to delete a todo")
-            
+        print("-"*20)
+        print("Select an index to delete a todo")
+        while True:
+            if i == 0:
+                print("-"*20)
+                print("No todos to delete")
+                input("Press enter to continue ")
+                break
             try:
                 index = int(input("Delete todo > "))
                 deleted_todo = todos.pop(index)
-                print("-"*20)
                 print("Deleted todo :", deleted_todo)
-                print("-"*20)
-                input("Press enter to return to menu ")
-
+                input("Press enter to continue ")
+                break
             except ValueError:
-                print("-"*20)
                 print("Error: invalid index")
+                input("Press enter to try again ")
                 print("-"*20)
-                input("Press enter to return to menu ")
-
             except IndexError:
-                print("-"*20)
-                print("Error: index out of range")
-                print("-"*20)
-                input("Press enter to return to menu ")
+                if index == 0:
+                    todos = []
+                    print("Deleted todo :", deleted_todo)
+                    input("Press enter to continue ")
+                    break
+                else:
+                    print("Error: index out of range")
+                    input("Press enter to try again ")
+                    print("-"*20)
+        list_todos()
 
     elif operation == "load":
         f = open("Case/Case (GitHub)/case_grupp_55/case_2/todolist.json")
         todos = f.read()
         todos = json.loads(todos)
         f.close()
-        print("-"*20)
-        input("Todolist loaded")
-        print("-"*20)
-        input("Press enter to return to menu ")
+        list_todos()
 
     elif operation == "save":
         f = open("Case/Case (GitHub)/case_grupp_55/case_2/todolist.json", "w")
         print(todos)
         f.write(json.dumps(todos))
         f.close()
-        print("-"*20)
-        input("Todolist saved")
-        print("-"*20)
-        input("Press enter to return to menu ")
-
-    else:
-        print("-"*20)
-        print("Invalid operation")
-        print("-"*20)
-        input("Press enter to return to menu ")
-
-    list_todos()
+        list_todos()
 list_todos()
