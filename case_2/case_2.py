@@ -3,7 +3,7 @@ import os
 
 todos = []
 
-database_path = "case_grupp_55/case_2/todolist_database.json"
+database_path = "case_grupp_55/case_2/todoify_database.json"
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
