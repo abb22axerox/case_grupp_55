@@ -33,7 +33,7 @@ load   | Load todos from file
 ERROR: Unknown command "{selection}"
 ''')
     
-    if selection == "list":
+    elif selection == "list":
         print(40 * '-')
         if todos == []:
             print('No todos!')
