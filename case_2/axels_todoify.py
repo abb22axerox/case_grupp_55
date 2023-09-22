@@ -64,7 +64,7 @@ def main_func():
 
     if selection == 'check':
         user_todo_id = input('Todo index > ')
-
+        print(columns)
         for column in columns:
             if user_todo_id == column[0]:
                 if column[2] == ' ':
