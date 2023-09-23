@@ -3,10 +3,15 @@ import os
 
 todos = []
 
-database_path = "case_grupp_55/case_2/todoify_database.json"
+database_path = "case_2/todoify_database.json" # "case_grupp_55/" removed from front of string
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
+
+def print_todos(todo_list):
+    for todo in todo_list:
+        print(f'[{todo[0]}] {todo[1]}')
+    print(40 * '-')
 
 def main_func():
     clear_terminal()
@@ -38,9 +43,7 @@ ERROR: Unknown command "{selection}"
         if todos == []:
             print('No todos!')
         else:
-            for todo in todos:
-                print(f'[{todo[0]}] {todo[1]}')
-        print(40 * '-')
+            print_todos(todos)
 
     elif selection == "add":
         print(40 * '-')
@@ -129,9 +132,7 @@ No todos to delete!
               
 SUCCESS: Todos saved to file
 ''')
-        for todo in todos:
-            print(f'''[{todo[0]}] {todo[1]}''')
-        print('')
+        print_todos(todos)
 
     elif selection == "load":
         f = open(database_path)
@@ -142,9 +143,7 @@ SUCCESS: Todos saved to file
               
 SUCCESS: Todos loaded from file
 ''')
-        for todo in todos:
-            print(f'''[{todo[0]}] {todo[1]}''')
-        print('')
+        print_todos(todos)
         
     input('Press enter to continue...')
     main_func()
