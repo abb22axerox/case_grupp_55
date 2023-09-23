@@ -60,7 +60,7 @@ SUCCESS: Todo added "{new_todo_element}"
             i += 1
         
         if i == 0:
-            print(f'''                            
+            print('''                            
 No todos to check / uncheck!
 ''')
         else:
@@ -80,12 +80,12 @@ No todos to check / uncheck!
     SUCCESS: CHECKED -> UNCHECKED
     ''')
             except ValueError:
-                print(f'''----------------------------------------
+                print('''----------------------------------------
                 
     ERROR: Invalid index (must be a number)
     ''')
             except IndexError:
-                print(f'''
+                print('''
     ERROR: Invalid index (index out of range)
     ''')
 
@@ -98,7 +98,7 @@ No todos to check / uncheck!
             i += 1
 
         if i == 0:
-            print(f'''       
+            print('''       
 No todos to delete!
 ''')
         else:
@@ -111,12 +111,12 @@ No todos to delete!
     SUCCESS: Todo deleted "{deleted_todo[1]}"
     ''')
             except ValueError:
-                print(f'''----------------------------------------
+                print('''----------------------------------------
                 
     ERROR: Invalid index (must be a number)
     ''')
             except IndexError:
-                print(f'''----------------------------------------
+                print('''----------------------------------------
                 
     ERROR: Invalid index (index out of range)
     ''')
@@ -125,7 +125,7 @@ No todos to delete!
         f = open(database_path, "w")
         f.write(json.dumps(todos))
         f.close()
-        print(f'''----------------------------------------
+        print('''----------------------------------------
               
 SUCCESS: Todos saved to file
 ''')
@@ -138,7 +138,7 @@ SUCCESS: Todos saved to file
         todos = f.read()
         todos = json.loads(todos)
         f.close()
-        print(f'''----------------------------------------
+        print('''----------------------------------------
               
 SUCCESS: Todos loaded from file
 ''')
