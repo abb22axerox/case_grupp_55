@@ -3,13 +3,13 @@ import os
 
 todos = []
 
-database_path = "case_2/todoify_database.json" # "case_grupp_55/" removed from front of string
+database_path = "case_grupp_55/case_2/todoify_database.json" # "case_grupp_55/" removed from front of string
 
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def print_todos(todo_list):
-    for todo in todo_list:
+def print_todos():
+    for todo in todos:
         print(f'[{todo[0]}] {todo[1]}')
     print(40 * '-')
 
@@ -30,20 +30,13 @@ load   | Load todos from file
     global todos
 
     selection = input("Selection > ")
-
-    valid_selections = ['list', 'add', 'check', 'delete', 'save', 'load']
-    if selection not in valid_selections:
-        print(f'''----------------------------------------
-              
-ERROR: Unknown command "{selection}"
-''')
     
-    elif selection == "list":
+    if selection == "list":
         print(40 * '-')
         if todos == []:
             print('No todos!')
         else:
-            print_todos(todos)
+            print_todos()
 
     elif selection == "add":
         print(40 * '-')
@@ -132,7 +125,7 @@ No todos to delete!
               
 SUCCESS: Todos saved to file
 ''')
-        print_todos(todos)
+        print_todos()
 
     elif selection == "load":
         f = open(database_path)
@@ -143,7 +136,14 @@ SUCCESS: Todos saved to file
               
 SUCCESS: Todos loaded from file
 ''')
-        print_todos(todos)
+        print_todos()
+    
+    else:
+        print(f'''----------------------------------------
+              
+ERROR: Unknown command "{selection}"
+''')
+
         
     input('Press enter to continue...')
     main_func()
