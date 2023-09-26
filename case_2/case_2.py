@@ -141,7 +141,6 @@ SUCCESS: Todos loaded from file
               
 ERROR: Unknown command "{selection}"
 ''')
-
         
     input('Press enter to continue...')
     main_func()
