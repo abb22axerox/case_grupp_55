@@ -68,22 +68,22 @@ No todos to check / uncheck!
                 if todos[user_todo_id][0] == ' ':
                     todos[user_todo_id][0] = 'X'
                     print('''
-    SUCCESS: UNCHECKED -> CHECKED
-    ''')
+SUCCESS: UNCHECKED -> CHECKED
+''')
                 else:
                     todos[user_todo_id][0] = ' '
                     print('''
-    SUCCESS: CHECKED -> UNCHECKED
-    ''')
+SUCCESS: CHECKED -> UNCHECKED
+''')
             except ValueError:
                 print('''----------------------------------------
                 
-    ERROR: Invalid index (must be a number)
-    ''')
+ERROR: Invalid index (must be a number)
+''')
             except IndexError:
                 print('''
-    ERROR: Invalid index (index out of range)
-    ''')
+ERROR: Invalid index (index out of range)
+''')
 
     elif selection == "delete":
         print(40 * '-')
@@ -104,18 +104,18 @@ No todos to delete!
                 deleted_todo = todos.pop(user_todo_id)
                 print(f'''----------------------------------------
                 
-    SUCCESS: Todo deleted "{deleted_todo[1]}"
-    ''')
+SUCCESS: Todo deleted "{deleted_todo[1]}"
+''')
             except ValueError:
                 print('''----------------------------------------
                 
-    ERROR: Invalid index (must be a number)
-    ''')
+ERROR: Invalid index (must be a number)
+''')
             except IndexError:
                 print('''----------------------------------------
                 
-    ERROR: Invalid index (index out of range)
-    ''')
+ERROR: Invalid index (index out of range)
+''')
             
     elif selection == "save":
         f = open(database_path, "w")
