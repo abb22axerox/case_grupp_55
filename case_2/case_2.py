@@ -3,8 +3,7 @@ import os
 
 todos = []
 
-database_path = "case_grupp_55/case_2/todoify_database.json" # "case_grupp_55/" removed from front of string
-
+database_path = "Case/Case (GitHub)/case_grupp_55/case_2/todoify_database.json"
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -129,8 +128,7 @@ SUCCESS: Todos saved to file
 
     elif selection == "load":
         f = open(database_path)
-        todos = f.read()
-        todos = json.loads(todos)
+        todos = json.loads(f.read())
         f.close()
         print('''----------------------------------------
               
