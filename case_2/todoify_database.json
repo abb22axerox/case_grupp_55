@@ -1,1 +1,14 @@
-[[" ", "fish"], ["X", "math"], ["X", "physics"], ["X", "Eat food"], [" ", "eat fish"]]
+[
+    [
+        " ",
+        "fish"
+    ],
+    [
+        "X",
+        "math"
+    ],
+    [
+        " ",
+        "physics"
+    ]
+]
