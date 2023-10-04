@@ -3,7 +3,8 @@ import os
 
 todos = []
 
-database_path = "Case/Case (GitHub)/case_grupp_55/case_2/todoify_database.json"
+database_path = "case_grupp_55/case_2/todoify_database.json"
+
 def clear_terminal():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -49,10 +50,8 @@ SUCCESS: Todo added "{new_todo_element}"
     elif selection == 'check':
         print(40 * '-')
 
-        i = 0
-        for todo in todos:
+        for i, todo in enumerate(todos):
             print(f'{str(i)} | [{todo[0]}] {todo[1]}')
-            i += 1
         
         if i == 0:
             print('''                            
