@@ -38,7 +38,7 @@ def find_artist(a):
                         print("Members:")
                         for member in info["members"]:
                             print("  -", member)
-                    print()
+                        print()
 
                     if len(info["genres"]) > 1:
                         print("Genres:")
