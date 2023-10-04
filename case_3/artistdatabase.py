@@ -18,8 +18,10 @@ def find_artist(a):
     print(".: Artist Database :.".center(24))
     print("*"*24)
     global artists
+    match = False
     for artist in artists:
         if artist["name"].lower() == a:
+            match = True
             print("Fetching information about", artist["name"] + "...")
             print("-"*24)
 
@@ -57,6 +59,10 @@ def find_artist(a):
                     print()
                     
                     print("-"*24)
+            break
+    if not match:
+        print("No artist or band named", a, "found")
+        print("-"*25)
 
 def list_artists():
     clear() 
