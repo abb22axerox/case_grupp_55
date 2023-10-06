@@ -4,7 +4,7 @@ import os
 
 url = "https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/"
 
-re = requests.get("https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/")
+re = requests.get(url)
 artists = json.loads(re.text)["artists"]
 
 def clear():
@@ -13,90 +13,89 @@ def clear():
     elif os.name == 'posix':
         os.system('clear')
 
-def find_artist(a):
-    clear()
-    print(".: Artist Database :.".center(24))
-    print("*"*24)
-    global artists
-    match = False
+def find_artist():
+    re = requests.get(url)
+    artists = json.loads(re.text)["artists"]
+
     for artist in artists:
-        if artist["name"].lower() == a:
-            match = True
-            print("Fetching information about", artist["name"] + "...")
-            print("-"*24)
+        if artist["name"].lower() == selection:
+            re = requests.get(url + artist["id"])
+            info = json.loads(re.text)["artist"]
 
-            re = requests.get(url)
-            artists = json.loads(re.text)["artists"]
+            print("Name:", info["name"])
+            print()
 
-            for artist in artists:
-                if artist["name"].lower() == a:
-                    re = requests.get(url + artist["id"])
-                    info = json.loads(re.text)["artist"]
+            if len(info["members"]) > 1:
+                print("Members:")
+                for member in info["members"]:
+                    print("  -", member)
+                print()
 
-                    print("Name:", info["name"])
-                    print()
-
-                    if len(info["members"]) > 1:
-                        print("Members:")
-                        for member in info["members"]:
-                            print("  -", member)
-                        print()
-
-                    if len(info["genres"]) > 1:
-                        print("Genres:")
-                        for genre in info["genres"]:
-                            print("  -", genre)
-                    else:
-                        print("Genre:", info["genres"][0])
-                    print()
+            if len(info["genres"]) > 1:
+                print("Genres:")
+                for genre in info["genres"]:
+                    print("  -", genre)
+            else:
+                print("Genre:", info["genres"][0])
+            print()
                     
-                    if len(info["years_active"]) > 1:
-                        print("Active:")
-                        for period in info["years_active"]:
-                            print("  -", period)
-                    else:
-                        print("Active:", info["years_active"][0])
-                    print()
+            if len(info["years_active"]) > 1:
+                print("Active:")
+                for period in info["years_active"]:
+                    print("  -", period)
+            else:
+                print("Active:", info["years_active"][0])
+            print()
                     
-                    print("-"*24)
+            print("-"*32)
             break
-    if not match:
-        print("No artist or band named", a, "found")
-        print("-"*25)
 
 def list_artists():
     clear() 
-    print(".: Artist Database :.".center(24))
-    print("*"*24)
+    print(".: Artist Database :.".center(32))
+    print("*"*32)
     for artist in artists:
         print("-", artist["name"])
-        print("-"*24)
+        print("-"*32)
 
 while True:
     clear()
-    print(".: Artist Database :.".center(24))
-    print("*"*24)
+    print(".: Artist Database :.".center(32))
+    print("*"*32)
     print("| L |  List artists")
     print("| V |  View artist profile")
     print("| E |  Exit application")
-    print("-"*24)
+    print("-"*32)
 
     op = input("> ")
-    print("-"*24)
+    print("-"*32)
     if op == "L":
         list_artists()
 
     elif op == "V":
         selection = input("View the profile of > ").lower()
-        print("-"*24)
-        find_artist(selection)
+
+        clear()
+        print(".: Artist Database :.".center(32))
+        print("*"*32)
+
+        for artist in artists:
+            if artist["name"].lower() == selection:
+                print("Fetching ", artist["name"] + "...")
+                print("-"*32)
+                find_artist()
+                break
+        else:
+            print("No artist or band named", selection, "found")
+            print("-"*32)
 
     elif op == "E":
         print("Exiting application...")
+        print("-"*32)
         exit()
 
     else:
         print("Invalid operation")
-        print("-"*24)
+        print("-"*32)
 
     input("Press enter to continue ")
