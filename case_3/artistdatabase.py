@@ -13,10 +13,13 @@ def clear():
     elif os.name == 'posix':
         os.system('clear')
 
-def list_artists():
+def print_menu():
     clear() 
     print(".: Artist Database :.".center(32))
     print("*"*32)
+
+def list_artists():
+    print_menu()
     for artist in artists:
         print("-", artist["name"])
         print("-"*32)
@@ -59,9 +62,7 @@ def fetch_artist():
             break
 
 while True:
-    clear()
-    print(".: Artist Database :.".center(32))
-    print("*"*32)
+    print_menu()
     print("| L |  List artists")
     print("| V |  View artist profile")
     print("| E |  Exit application")
@@ -75,9 +76,7 @@ while True:
     elif op == "V":
         selection = input("View the profile of > ").lower()
 
-        clear()
-        print(".: Artist Database :.".center(32))
-        print("*"*32)
+        print_menu()
         for artist in artists:
             if artist["name"].lower() == selection:
                 print("Fetching ", artist["name"] + "...")
