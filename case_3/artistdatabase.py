@@ -13,7 +13,15 @@ def clear():
     elif os.name == 'posix':
         os.system('clear')
 
-def find_artist():
+def list_artists():
+    clear() 
+    print(".: Artist Database :.".center(32))
+    print("*"*32)
+    for artist in artists:
+        print("-", artist["name"])
+        print("-"*32)
+
+def fetch_artist():
     re = requests.get(url)
     artists = json.loads(re.text)["artists"]
 
@@ -50,14 +58,6 @@ def find_artist():
             print("-"*32)
             break
 
-def list_artists():
-    clear() 
-    print(".: Artist Database :.".center(32))
-    print("*"*32)
-    for artist in artists:
-        print("-", artist["name"])
-        print("-"*32)
-
 while True:
     clear()
     print(".: Artist Database :.".center(32))
@@ -67,7 +67,7 @@ while True:
     print("| E |  Exit application")
     print("-"*32)
 
-    op = input("> ")
+    op = input("> ").upper()
     print("-"*32)
     if op == "L":
         list_artists()
@@ -78,12 +78,11 @@ while True:
         clear()
         print(".: Artist Database :.".center(32))
         print("*"*32)
-
         for artist in artists:
             if artist["name"].lower() == selection:
                 print("Fetching ", artist["name"] + "...")
                 print("-"*32)
-                find_artist()
+                fetch_artist()
                 break
         else:
             print("No artist or band named", selection, "found")
