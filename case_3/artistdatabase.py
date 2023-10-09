@@ -30,7 +30,7 @@ def fetch_artist():
     artists = json.loads(api_data.text)["artists"]
 
     for artist in artists:
-        if artist["name"].lower() == selection:
+        if artist["name"].lower() == artist_selection:
             api_data = requests.get(api_url + artist["id"])
             status_check(api_data.status_code)
             artist_data = json.loads(api_data.text)["artist"]
