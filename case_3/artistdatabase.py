@@ -97,7 +97,7 @@ while True:
                 break
         else:
             print("-"*32)
-            print(f'No artist or band named {selection} found')
+            print(f'No artist or band named "{selection}" found')
             print(32 * '-')
 
     elif selection == "E":
