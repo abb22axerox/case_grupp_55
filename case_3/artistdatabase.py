@@ -2,7 +2,9 @@ import requests
 import json
 import os
 
-def clear():
+api_url = "https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/"
+
+def clear_terminal():
     if os.name == 'nt':
         os.system('cls')
     elif os.name == 'posix':
@@ -14,94 +16,96 @@ def status_check(code):
         exit()
 
 def print_menu():
-    clear() 
-    print(".: Artist Database :.".center(32))
-    print("*"*32)
+    clear_terminal() 
+    print('''--------------------------------
+        Artists Database
+********************************''')
 
 def list_artists():
     print_menu()
     for artist in artists:
-        print("-", artist["name"])
-        print("-"*32)
+        print(f'- {artist["name"]}')
+    print(32 * '-')
 
 def fetch_artist():
-    re = requests.get(url)
-    status_check(re.status_code)
-    artists = json.loads(re.text)["artists"]
+    api_data = requests.get(api_url)
+    status_check(api_data.status_code)
+    artists = json.loads(api_data.text)["artists"]
 
     for artist in artists:
         if artist["name"].lower() == selection:
-            re = requests.get(url + artist["id"])
-            status_check(re.status_code)
-            info = json.loads(re.text)["artist"]
+            api_data = requests.get(api_url + artist["id"])
+            status_check(api_data.status_code)
+            artist_data = json.loads(api_data.text)["artist"]
 
-            print("Name:", info["name"])
-            print()
-
-            if len(info["members"]) > 1:
-                print("Members:")
-                for member in info["members"]:
-                    print("  -", member)
+            print(f'''Name: {artist_data["name"]}
+''')
+            # prints members
+            if len(artist_data["members"]) > 1:
+                print('Members:')
+                for member in artist_data["members"]:
+                    print(f'- {member}')
                 print()
 
-            if len(info["genres"]) > 1:
-                print("Genres:")
-                for genre in info["genres"]:
-                    print("  -", genre)
+            # prints genres
+            if len(artist_data["genres"]) > 1:
+                print('Genres:')
+                for genre in artist_data["genres"]:
+                    print(f'- {genre}')
             else:
-                print("Genre:", info["genres"][0])
+                print(f'Genre: {artist_data["genres"][0]}')
             print()
-                                
-            if len(info["years_active"]) > 1:
-                print("Active:")
-                for period in info["years_active"]:
-                    print("  -", period)
+            
+            # print years active
+            if len(artist_data["years_active"]) > 1:
+                print('Active:')
+                for period in artist_data["years_active"]:
+                    print(f'- {period}')
             else:
-                print("Active:", info["years_active"][0])
+                print(f'Active: {artist_data["years_active"][0]}')
             print()
-                                
-            print("-"*32)
+
+            print(32 * '-')
             break
 
-
-url = "https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/"
-
-re = requests.get(url)
-status_check(re.status_code)
-artists = json.loads(re.text)["artists"]
+api_data = requests.get(api_url)
+status_check(api_data.status_code)
+artists = json.loads(api_data.text)["artists"]
 
 while True:
     print_menu()
-    print("| L |  List artists")
-    print("| V |  View artist profile")
-    print("| E |  Exit application")
-    print("-"*32)
+    print('''| L | List artists
+| V | View artist profile
+| E | Exit application
+--------------------------------''')
 
-    op = input("> ").upper()
-    print("-"*32)
-    if op == "L":
+    selection = input('| Selection > ').upper()
+
+    print(32 * '-')
+
+    if selection == "L":
         list_artists()
 
-    elif op == "V":
-        selection = input("View the profile of > ").lower()
+    elif selection == "V":
+        selection = input('View the profile of > ').lower()
         print_menu()
         for artist in artists:
             if artist["name"].lower() == selection:
-                print("Fetching ", artist["name"] + "...")
-                print("-"*32)
+                print(f'Fetching {artist["name"]}...')
+                print(32 * '-')
                 fetch_artist()
                 break
         else:
-            print("No artist or band named", selection, "found")
-            print("-"*32)
+            print(f'No artist or band named {selection} found')
+            print(32 * '-')
 
-    elif op == "E":
-        print("Exiting application...")
-        print("-"*32)
+    elif selection == "E":
+        print('Exiting application...')
+        print(32 * '-')
         exit()
 
     else:
-        print("Invalid operation")
-        print("-"*32)
+        print(f'Invalid operation {selection}')
+        print(32 * '-')
 
-    input("Press enter to continue ")
+    input('Press enter to continue... ')
