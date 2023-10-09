@@ -12,7 +12,7 @@ def clear_terminal():
 
 def status_check(code):
     if not (200 <= code < 300):
-        print("Error: API request failed, aborting")
+        print('Error: API request failed, aborting')
         exit()
 
 def print_header():
