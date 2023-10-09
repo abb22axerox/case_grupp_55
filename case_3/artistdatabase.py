@@ -88,7 +88,6 @@ while True:
 
     elif selection == "V":
         selection = input('View the profile of > ').lower()
-        print_menu()
         for artist in artists:
             if artist["name"].lower() == selection:
                 print_header()
@@ -107,7 +106,7 @@ while True:
         exit()
 
     else:
-        print(f'Invalid operation {selection}')
+        print(f'Invalid operation "{selection}"')
         print(32 * '-')
 
     input('Press enter to continue... ')
