@@ -5,10 +5,7 @@ import os
 api_url = "https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/"
 
 def clear_terminal():
-    if os.name == 'nt':
-        os.system('cls')
-    elif os.name == 'posix':
-        os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def status_check(code):
     if not (200 <= code < 300):
@@ -89,9 +86,9 @@ while True:
         list_artists()
 
     elif selection == "V":
-        selection = input('View the profile of > ').lower()
+        artist_selection = input('View the profile of > ').lower()
         for artist in artists:
-            if artist["name"].lower() == selection:
+            if artist["name"].lower() == artist_selection:
                 print_header()
                 print(f'Fetching {artist["name"]}...')
                 print(32 * '-')
@@ -99,7 +96,7 @@ while True:
                 break
         else:
             print("-"*32)
-            print(f'No artist or band named "{selection}" found')
+            print(f'No artist or band named "{artist_selection}" found')
             print(32 * '-')
 
     elif selection == "E":
