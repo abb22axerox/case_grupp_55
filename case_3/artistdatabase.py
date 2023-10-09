@@ -38,14 +38,16 @@ def fetch_artist():
             status_check(api_data.status_code)
             artist_data = json.loads(api_data.text)["artist"]
 
-            print(f'''Name: {artist_data["name"]}
-''')
             # prints members
             if len(artist_data["members"]) > 1:
                 print('Members:')
                 for member in artist_data["members"]:
                     print(f'- {member}')
                 print()
+            elif artist_data["members"][0] != artist_data["name"]:
+                print(f'''Real name:
+  {artist_data["members"][0]}
+''')
 
             # prints genres
             if len(artist_data["genres"]) > 1:
