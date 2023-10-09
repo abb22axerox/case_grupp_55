@@ -15,14 +15,14 @@ def status_check(code):
         print("Error: API request failed, aborting")
         exit()
 
-def print_menu():
+def print_header():
     clear_terminal() 
     print('''--------------------------------
         Artists Database
 ********************************''')
 
 def list_artists():
-    print_menu()
+    print_header()
     for artist in artists:
         print(f'- {artist["name"]}')
     print(32 * '-')
@@ -73,7 +73,7 @@ status_check(api_data.status_code)
 artists = json.loads(api_data.text)["artists"]
 
 while True:
-    print_menu()
+    print_header()
     print('''| L | List artists
 | V | View artist profile
 | E | Exit application
@@ -91,11 +91,13 @@ while True:
         print_menu()
         for artist in artists:
             if artist["name"].lower() == selection:
+                print_header()
                 print(f'Fetching {artist["name"]}...')
                 print(32 * '-')
                 fetch_artist()
                 break
         else:
+            print("-"*32)
             print(f'No artist or band named {selection} found')
             print(32 * '-')
 
