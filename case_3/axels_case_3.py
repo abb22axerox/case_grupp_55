@@ -26,7 +26,7 @@ print_basic_message()
 print_instructions()
 
 while True:
-    selection = (input('| Selection > ')).lower()
+    selection = input('| Selection > ').lower()
 
     if selection == 'l':
         print_basic_message()
@@ -37,7 +37,7 @@ while True:
     
     elif selection == 'v':
         print_basic_message()
-        name = (input('| Artist name > ')).lower().title()
+        name = input('| Artist name > ').lower().title()
         match = False
 
         for artist in main_dict['artists']:
@@ -72,11 +72,11 @@ while True:
         break
     
     else:
-        print(f'''----------------------------------------
+        input(f'''----------------------------------------
 |
 | ERROR: Unknown command '{selection}'
 |
-----------------------------------------''')
-        input('Press enter to continue...')
+----------------------------------------
+Press enter to continue...''')
         print_basic_message()
         print_instructions()
