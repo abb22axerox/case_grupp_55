@@ -29,10 +29,10 @@ re = json.loads(i_fetch.text)
 
 while True:
     clear()
-    print("Available seasons:", re["seasons"][0], "---", re["seasons"][-1])
-    print("-"*40)
+    print("Seasons:", re["seasons"][0] + "-" + re["seasons"][-1])
+    print("-"*24)
     selection = input("Season > ")
-    print("-"*40)
+    print("-"*24)
 
     for i, season in enumerate(re["seasons"]):
         if season == selection:
@@ -40,7 +40,7 @@ while True:
             break
     else:
         print("Error: invalid season")
-        print("-"*40)
+        print("-"*24)
         input("Press enter to continue ")
         continue
 
@@ -64,7 +64,7 @@ while True:
         status_check(g_fetch.status_code, "Gameday Fetch")
         gameday = json.loads(g_fetch.text)
 
-        print("Fetching day", gameday["date"] + "...")
+        print("Fetching day", gameday["date"][5:] + "...")
         for game in gameday["games"]:
             h_name = game["score"]["home"]["team"]
             h_score = game["score"]["home"]["goals"]
@@ -82,7 +82,7 @@ while True:
                 tally(a_name, d=1)
                 tally(h_name, d=1)
 
-    print("-"*40)
+    print("-"*24)
     input("Fetch complete, press enter to continue ")
     clear()
     print("Season:", season["year"], "-", "Teams:", len(a_teams), "-", "Gamedays:", len(season["gamedays"]))
