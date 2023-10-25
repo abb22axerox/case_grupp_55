@@ -3,10 +3,7 @@ import json
 import os
 
 def clear():
-    if os.name == 'nt':
-        os.system('cls')
-    elif os.name == 'posix':
-        os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def status_check(code, stage="Unknown"):
     if not (200 <= code < 300):
