@@ -21,9 +21,9 @@ def tally(t, w=0, d=0, l=0):
 
 url = "http://football-frenzy.s3-website.eu-north-1.amazonaws.com/api"
 
-i_fetch = requests.get(url)
-status_check(i_fetch.status_code, "Initial Fetch")
-response_text = json.loads(i_fetch.text)
+initial_fetch = requests.get(url)
+status_check(initial_fetch.status_code, "Initial Fetch")
+response_text = json.loads(initial_fetch.text)
 
 while True:
     clear()
@@ -42,9 +42,9 @@ while True:
         input("Press enter to continue ")
         continue
 
-    s_fetch = requests.get(season_url)
-    status_check(s_fetch.status_code, "Season Fetch")
-    season = json.loads(s_fetch.text)
+    season_fetch = requests.get(season_url)
+    status_check(season_fetch.status_code, "Season Fetch")
+    season = json.loads(season_fetch.text)
 
     teams = []
     for team in season["teams"]:
@@ -58,9 +58,9 @@ while True:
 
     for i, day in enumerate(season["gamedays"]):
         gameday_url = season_url + "/" + season["gamedays"][i]
-        gd_fetch = requests.get(gameday_url)
-        status_check(gd_fetch.status_code, "Gameday Fetch")
-        gameday = json.loads(gd_fetch.text)
+        game_day_fetch = requests.get(gameday_url)
+        status_check(game_day_fetch.status_code, "Gameday Fetch")
+        gameday = json.loads(game_day_fetch.text)
 
         print("Fetching day", gameday["date"][5:] + "...")
         for game in gameday["games"]:
