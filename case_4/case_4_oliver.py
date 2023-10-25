@@ -10,14 +10,23 @@ def status_check(code, stage="Unknown"):
         print("Error: API request failed at stage: " + stage + ", aborting")
         exit()
         
-def tally(t, w=0, d=0, l=0):
+def tally(home_name, home_score, away_name, away_score):
     for team in teams:
-        if team["name"] == t:
-            team["wins"] += w
-            team["draws"] += d
-            team["losses"] += l
-            team["points"] += ((w * 3) + d)
-            break
+        if team["name"] == home_name:
+            if home_score > away_score:
+                team["wins"] += 1
+            elif away_score > home_score:
+                team["losses"] += 1
+            else:
+                team["draws"] += 1
+        elif team["name"] == away_name:
+            if away_score > home_score:
+                team["wins"] += 1
+            elif home_score > away_score:
+                team["losses"] += 1
+            else:
+                team["draws"] += 1
+
 
 url = "http://football-frenzy.s3-website.eu-north-1.amazonaws.com/api"
 
@@ -64,21 +73,7 @@ while True:
 
         print("Fetching day", gameday["date"][5:] + "...")
         for game in gameday["games"]:
-            h_name = game["score"]["home"]["team"]
-            h_score = game["score"]["home"]["goals"]
-
-            a_name = game["score"]["away"]["team"]
-            a_score = game["score"]["away"]["goals"]
-
-            if h_score > a_score:
-                tally(h_name, w=1)
-                tally(a_name, l=1)
-            elif h_score < a_score:
-                tally(a_name, w=1)
-                tally(h_name, l=1)
-            else:
-                tally(a_name, d=1)
-                tally(h_name, d=1)
+            tally(game["score"]["home"]["team"], game["score"]["home"]["goals"], game["score"]["away"]["team"], game["score"]["away"]["goals"])
 
     print("-"*22)
     input("Fetch complete, press enter to continue ")
@@ -86,6 +81,8 @@ while True:
     print("Season:", season["year"], "|", "Teams:", len(teams), "|", "Gamedays:", len(season["gamedays"]))
     print("*"*40)
 
+    for team in teams:
+        team["points"] = (team["wins"] * 3) + team["draws"]
     teams = sorted(teams, key=lambda x: x["points"], reverse=True)
 
     for team in teams:
