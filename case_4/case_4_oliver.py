@@ -14,33 +14,34 @@ def status_check(code, stage="Unknown"):
         exit()
         
 def tally(t, w=0, d=0, l=0):
-    for team in a_teams:
+    for team in teams:
         if team["name"] == t:
             team["wins"] += w
             team["draws"] += d
             team["losses"] += l
             team["points"] += ((w * 3) + d)
+            break
 
 url = "http://football-frenzy.s3-website.eu-north-1.amazonaws.com/api"
 
 i_fetch = requests.get(url)
 status_check(i_fetch.status_code, "Initial Fetch")
-re = json.loads(i_fetch.text)
+response_text = json.loads(i_fetch.text)
 
 while True:
     clear()
-    print("Seasons:", re["seasons"][0] + "-" + re["seasons"][-1])
-    print("-"*24)
+    print("Seasons:", response_text["seasons"][0] + "-" + response_text["seasons"][-1])
+    print("-"*22)
     selection = input("Season > ")
-    print("-"*24)
+    print("-"*22)
 
-    for i, season in enumerate(re["seasons"]):
+    for i, season in enumerate(response_text["seasons"]):
         if season == selection:
-            season_url = url + "/" + re["seasons"][i]
+            season_url = url + "/" + response_text["seasons"][i]
             break
     else:
         print("Error: invalid season")
-        print("-"*24)
+        print("-"*22)
         input("Press enter to continue ")
         continue
 
@@ -48,9 +49,9 @@ while True:
     status_check(s_fetch.status_code, "Season Fetch")
     season = json.loads(s_fetch.text)
 
-    a_teams = []
+    teams = []
     for team in season["teams"]:
-        a_teams.append({
+        teams.append({
             "name": team,
             "wins": 0,
             "draws": 0,
@@ -60,9 +61,9 @@ while True:
 
     for i, day in enumerate(season["gamedays"]):
         gameday_url = season_url + "/" + season["gamedays"][i]
-        g_fetch = requests.get(gameday_url)
-        status_check(g_fetch.status_code, "Gameday Fetch")
-        gameday = json.loads(g_fetch.text)
+        gd_fetch = requests.get(gameday_url)
+        status_check(gd_fetch.status_code, "Gameday Fetch")
+        gameday = json.loads(gd_fetch.text)
 
         print("Fetching day", gameday["date"][5:] + "...")
         for game in gameday["games"]:
@@ -82,16 +83,16 @@ while True:
                 tally(a_name, d=1)
                 tally(h_name, d=1)
 
-    print("-"*24)
+    print("-"*22)
     input("Fetch complete, press enter to continue ")
     clear()
-    print("Season:", season["year"], "-", "Teams:", len(a_teams), "-", "Gamedays:", len(season["gamedays"]))
+    print("Season:", season["year"], "|", "Teams:", len(teams), "|", "Gamedays:", len(season["gamedays"]))
     print("*"*40)
 
-    a_teams = sorted(a_teams, key=lambda x: x["points"], reverse=True)
+    teams = sorted(teams, key=lambda x: x["points"], reverse=True)
 
-    for team in a_teams:
+    for team in teams:
         print(team["name"] + ":")
         print("[P]:", team["points"], "|", "[W]:", team["wins"], "|", "[D]:", team["draws"], "|", "[L]:", team["losses"])
-        print("-"*40)
+        print("-"*37)
     input("Press enter to continue ")
