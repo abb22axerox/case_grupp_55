@@ -89,4 +89,4 @@ while True:
         print(team["name"] + ":")
         print("[P]:", team["points"], "|", "[W]:", team["wins"], "|", "[D]:", team["draws"], "|", "[L]:", team["losses"])
         print("-"*37)
-    input("Press enter to continue ")
+    input("Press enter to continue...")
